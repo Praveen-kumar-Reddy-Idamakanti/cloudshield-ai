@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { LineChart as LineChartIcon, BarChart as BarChartIcon, PieChart, ArrowUpRight, Calendar, Download, Filter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -24,9 +23,8 @@ import {
   Cell
 } from 'recharts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { statsApi, timeSeriesData } from '../api/api';
+import { statsApi } from '../api/api';
 
-// Mock analytics data
 const mockActivityData = [
   { date: 'Mon', logs: 120, anomalies: 12 },
   { date: 'Tue', logs: 230, anomalies: 25 },

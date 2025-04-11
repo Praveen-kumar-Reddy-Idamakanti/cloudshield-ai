@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Users, Shield, MoreHorizontal, UserPlus, Search, Check, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +36,6 @@ import {
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 
-// Mock user data
 const mockUsers = [
   { id: '1', name: 'John Doe', email: 'john@example.com', role: 'admin', status: 'active' },
   { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'user', status: 'active' },
@@ -56,13 +54,11 @@ const UserManagement: React.FC = () => {
   const [newUser, setNewUser] = useState({ name: '', email: '', role: 'user' });
 
   useEffect(() => {
-    // Redirect to login if not authenticated
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
-    // Check if user is admin
     if (user?.role !== 'admin') {
       navigate('/dashboard');
       toast.error('You do not have access to this page');
@@ -70,16 +66,13 @@ const UserManagement: React.FC = () => {
     }
   }, [isAuthenticated, navigate, user]);
 
-  // Toggle sidebar
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  // Filter users based on search query
   const filteredUsers = users.filter(user => 
     user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     user.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Add new user
   const handleAddUser = () => {
     if (!newUser.name || !newUser.email) {
       toast.error('Please fill all required fields');
@@ -101,7 +94,6 @@ const UserManagement: React.FC = () => {
     toast.success('User added successfully');
   };
 
-  // Update user status
   const updateUserStatus = (id: string, status: string) => {
     const updatedUsers = users.map(user => 
       user.id === id ? { ...user, status } : user
@@ -110,7 +102,6 @@ const UserManagement: React.FC = () => {
     toast.success(`User ${status === 'active' ? 'activated' : 'deactivated'} successfully`);
   };
 
-  // Update user role
   const updateUserRole = (id: string, role: string) => {
     const updatedUsers = users.map(user => 
       user.id === id ? { ...user, role } : user
@@ -240,7 +231,7 @@ const UserManagement: React.FC = () => {
                       </TableCell>
                       <TableCell>
                         {user.status === 'active' ? (
-                          <Badge variant="success" className="bg-green-100 text-green-800 hover:bg-green-100">
+                          <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-100">
                             Active
                           </Badge>
                         ) : (

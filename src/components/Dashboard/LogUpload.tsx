@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Upload, Shield, Lock, AlertCircle, FileAnalytics, BarChart } from 'lucide-react';
+import { Upload, Shield, Lock, AlertCircle, FileText, BarChart } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -211,7 +210,7 @@ const LogUpload: React.FC = () => {
                 {uploadedFiles.map((fileName, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-md">
                     <div className="flex items-center">
-                      <FileAnalytics className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <FileText className="h-4 w-4 mr-2 text-muted-foreground" />
                       <span className="text-sm">{fileName}</span>
                     </div>
                     <Button variant="ghost" size="sm" onClick={() => toast.info('Analysis opened')}>
