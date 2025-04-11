@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { LoginCredentials } from '@/api/api';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -28,6 +29,7 @@ const LoginForm: React.FC = () => {
   const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -40,7 +42,13 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      await login(values);
+      // Ensure we're passing valid LoginCredentials
+      const credentials: LoginCredentials = {
+        email: values.email,
+        password: values.password,
+      };
+      await login(credentials);
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
     } finally {
