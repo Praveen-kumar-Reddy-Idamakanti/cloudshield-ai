@@ -12,6 +12,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Anomalies from "./pages/Anomalies";
+import Analytics from "./pages/Analytics";
+import UserManagement from "./pages/UserManagement";
+import ModelManagement from "./pages/ModelManagement";
 import XAIExplanation from "./pages/XAIExplanation";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +33,10 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/anomalies" element={<Anomalies />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/users" element={<UserManagement />} />
+            <Route path="/models" element={<ModelManagement />} />
+            <Route path="/upload" element={<Dashboard />} />
             <Route path="/explanations/:id" element={<XAIExplanation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
