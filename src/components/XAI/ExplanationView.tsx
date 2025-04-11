@@ -8,9 +8,14 @@ import { ExplanationData } from '../../data/mockData';
 interface ExplanationViewProps {
   explanation: ExplanationData | null;
   isLoading?: boolean;
+  modelSource?: 'mock' | 'trained'; // Add source indicator for future implementation
 }
 
-const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoading = false }) => {
+const ExplanationView: React.FC<ExplanationViewProps> = ({ 
+  explanation, 
+  isLoading = false,
+  modelSource = 'mock' // Default to mock data for now
+}) => {
   // Only process data if explanation exists
   const shapData = explanation?.shap?.map(item => ({
     name: item.feature.replace('_', ' '),
@@ -87,7 +92,7 @@ const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoadin
         <CardHeader>
           <CardTitle className="flex items-center">
             <BookOpen className="mr-2 h-5 w-5 text-cyberpurple" />
-            SHAP Feature Importance
+            SHAP Feature Importance {modelSource === 'trained' && '(Trained Model)'}
           </CardTitle>
           <CardDescription>
             Showing how each feature contributes to the anomaly detection using SHAP (SHapley Additive exPlanations)
@@ -143,7 +148,7 @@ const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoadin
         <CardHeader>
           <CardTitle className="flex items-center">
             <AlertTriangle className="mr-2 h-5 w-5 text-amber-500" />
-            Contributing Factors
+            Contributing Factors {modelSource === 'trained' && '(Trained Model)'}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -164,7 +169,7 @@ const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoadin
         <CardHeader>
           <CardTitle className="flex items-center">
             <ShieldCheck className="mr-2 h-5 w-5 text-green-500" />
-            Recommendations
+            Recommendations {modelSource === 'trained' && '(Trained Model)'}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -183,7 +188,7 @@ const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoadin
         <CardHeader>
           <CardTitle className="flex items-center">
             <BookOpen className="mr-2 h-5 w-5 text-blue-500" />
-            LIME Feature Importance
+            LIME Feature Importance {modelSource === 'trained' && '(Trained Model)'}
           </CardTitle>
           <CardDescription>
             Showing how each feature contributes to the anomaly detection using LIME (Local Interpretable Model-agnostic Explanations)
