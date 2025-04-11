@@ -31,10 +31,18 @@ const XAIExplanation: React.FC = () => {
         setAnomaly(anomalyData);
         
         // Fetch explanation
-        const explanationData = await explanationsApi.getExplanation(id);
-        setExplanation(explanationData);
+        try {
+          const explanationData = await explanationsApi.getExplanation(id);
+          setExplanation(explanationData);
+        } catch (error: any) {
+          console.error("Failed to fetch explanation:", error);
+          // Still set explanation to null but don't show error toast
+          // This allows the UI to handle missing explanations gracefully
+          setExplanation(null);
+        }
       } catch (error: any) {
-        toast.error(error.message || 'Failed to fetch explanation data');
+        toast.error(error.message || 'Failed to fetch anomaly data');
+        setAnomaly(null);
       } finally {
         setIsLoading(false);
       }
@@ -124,9 +132,9 @@ const XAIExplanation: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <ExplanationView explanation={null as any} isLoading={true} />
+              <ExplanationView explanation={null} isLoading={true} />
             </div>
-          ) : anomaly && explanation ? (
+          ) : anomaly ? (
             <div className="space-y-6">
               {/* Anomaly Details */}
               <Card>
@@ -208,10 +216,12 @@ const XAIExplanation: React.FC = () => {
                       <h3 className="text-sm font-medium">Details</h3>
                       <p>{anomaly.details}</p>
                       
-                      <div>
-                        <p className="text-sm text-muted-foreground">Model Type</p>
-                        <p className="text-sm">{explanation.modelType}</p>
-                      </div>
+                      {explanation && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Model Type</p>
+                          <p className="text-sm">{explanation.modelType}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -223,9 +233,9 @@ const XAIExplanation: React.FC = () => {
           ) : (
             <div className="text-center py-12">
               <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h2 className="text-xl font-medium mb-2">Explanation Not Found</h2>
+              <h2 className="text-xl font-medium mb-2">Anomaly Not Found</h2>
               <p className="text-muted-foreground mb-6">
-                We couldn't find an explanation for this anomaly.
+                We couldn't find this anomaly in our system.
               </p>
               <Button asChild variant="outline">
                 <Link to="/anomalies">Back to Anomalies</Link>

@@ -6,20 +6,21 @@ import { AlertTriangle, BookOpen, Lightbulb, ShieldCheck } from 'lucide-react';
 import { ExplanationData } from '../../data/mockData';
 
 interface ExplanationViewProps {
-  explanation: ExplanationData;
+  explanation: ExplanationData | null;
   isLoading?: boolean;
 }
 
 const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoading = false }) => {
-  const shapData = explanation.shap.map(item => ({
+  // Only process data if explanation exists
+  const shapData = explanation?.shap?.map(item => ({
     name: item.feature.replace('_', ' '),
     value: parseFloat((item.importance * 100).toFixed(1))
-  }));
+  })) || [];
 
-  const limeData = explanation.lime.map(item => ({
+  const limeData = explanation?.lime?.map(item => ({
     name: item.feature.replace('_', ' '),
     value: parseFloat((item.importance * 100).toFixed(1))
-  }));
+  })) || [];
 
   if (isLoading) {
     return (
@@ -49,6 +50,31 @@ const ExplanationView: React.FC<ExplanationViewProps> = ({ explanation, isLoadin
           </CardHeader>
           <CardContent>
             <div className="h-40 bg-muted/30 animate-pulse rounded-md" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show a placeholder if explanation is null but not loading
+  if (!explanation) {
+    return (
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <AlertTriangle className="mr-2 h-5 w-5 text-amber-500" />
+              No Explanation Available
+            </CardTitle>
+            <CardDescription>
+              Explanation data for this anomaly could not be loaded.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
+              <AlertTriangle className="h-12 w-12 mb-4" />
+              <p>Explanation data is missing or could not be processed.</p>
+            </div>
           </CardContent>
         </Card>
       </div>
