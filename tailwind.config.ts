@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// CloudShield custom colors
+				cyberpurple: {
+					DEFAULT: '#8B5CF6',
+					50: '#F4F0FE',
+					100: '#E4DBFC',
+					200: '#C5B3F9',
+					300: '#A78AF7',
+					400: '#9973F6',
+					500: '#8B5CF6',
+					600: '#6827F3',
+					700: '#4F0CD8',
+					800: '#3C09A3',
+					900: '#29076F',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +99,26 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-slow': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'data-flow': {
+					'0%': { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(100%)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse-slow 3s infinite',
+				'fade-in': 'fade-in 0.5s ease-out',
+				'data-flow': 'data-flow 3s infinite linear'
 			}
 		}
 	},
